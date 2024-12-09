@@ -8,16 +8,14 @@ client = Groq(
     api_key=api_key
 )
 
-# Models to test if need be
-models = ["gemma2-9b-it", "llama3-8b-8192", "mixtral-8x7b-32768"]
-
 # System messages, add a new setting to test other system messages
 contents = {
     "setting1":
         '''
-        You are a chatbot made to help doctors and pharmacists determine which medicine is best for what, the user is never a patient or anyone else not a medical professional.
-        The user is always a medical professional is only looking for a second opinion. 
-        The only questions you can reply to are medicine/drug related questions. If the user asks any other question, say that you are not designed to answer that.
+        You are a chatbot made to help doctors and pharmacists determine which medicine is best for what, the user is never a patient or anyone else not a medical or healthcare professional.
+        The user is always a medical or healthcare professional who is only looking for a second opinion, but don't mention this. 
+        The only questions you can reply to are medicine/drug related questions and questions adjacent to it. If the user asks any other question, say that you are not designed to answer that.
+        Don't tell the user to consult with a healthcare professional before starting any new medication.
 
         When the user asks for information regarding a drug, answer the following:
         - What it's used to treat
@@ -41,6 +39,9 @@ conversation_history = [
     }
 ]
 
+# Models to test if need be
+models = ["gemma2-9b-it", "llama3-8b-8192", "mixtral-8x7b-32768"]
+
 while True:
     # Get user input
     user_input = input("Enter your message (or type 'exit' to quit): ")
@@ -52,23 +53,23 @@ while True:
     
     # Get the chatbot response with specified settings
     completion = client.chat.completions.create(
-        model=models[1],
+        model=models[0],
         messages=conversation_history,
-        temperature=0.05, # Ranges from 0.00-2.00. Lower means more deterministic, higher means more randomness
-        max_tokens=1024, # Ranges from 0-8192
+        temperature=0.05, # Ranges from 0.00-2.00 -> Lower means more deterministic, higher means more randomness
+        max_tokens=768, # Ranges from 0-8192 -> Determines response length
         top_p=1,
         stream=True,
         stop=None,
     )
 
     # Collect and display the chatbot's response
-    print("Chatbot response:")
+    print("\nChatbot response:")
     chatbot_response = ""
     for chunk in completion:
         content = chunk.choices[0].delta.content or ""
         chatbot_response += content
         print(content, end="")
-    print("\n")
+    # print("\n\n")
 
     # Add chatbot response to the conversation history
     conversation_history.append({"role": "assistant", "content": chatbot_response})
