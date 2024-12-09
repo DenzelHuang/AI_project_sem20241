@@ -8,6 +8,18 @@ client = Groq(
     api_key=api_key
 )
 
+# Models
+models = ["gemma2-9b-it", "llama3-8b-8192", "mixtral-8x7b-32768"]
+
+# Model to be used
+model = models[0]
+
+# Temperature setting. Ranges from 0.00-2.00 -> Lower means more deterministic, higher means more randomness
+temperature = 0.05
+
+# Tokens. Ranges from 0-8192 -> Determines response length
+tokens = 768
+
 # System messages, add a new setting to test other system messages
 contents = {
     "setting1":
@@ -39,9 +51,6 @@ conversation_history = [
     }
 ]
 
-# Models to test if need be
-models = ["gemma2-9b-it", "llama3-8b-8192", "mixtral-8x7b-32768"]
-
 while True:
     # Get user input
     user_input = input("Enter your message (or type 'exit' to quit): ")
@@ -53,10 +62,10 @@ while True:
     
     # Get the chatbot response with specified settings
     completion = client.chat.completions.create(
-        model=models[0],
+        model=model,
         messages=conversation_history,
-        temperature=0.05, # Ranges from 0.00-2.00 -> Lower means more deterministic, higher means more randomness
-        max_tokens=768, # Ranges from 0-8192 -> Determines response length
+        temperature=temperature,
+        max_tokens=tokens,
         top_p=1,
         stream=True,
         stop=None,
