@@ -134,7 +134,7 @@ while True:
         content = chunk.choices[0].delta.content or ""
         chatbot_response += content
         print(content, end="")
-    print("\n\n")
+    # print("\n")
 
     # Add chatbot response to the conversation history
     conversation_history.append({"role": "assistant", "content": chatbot_response})
