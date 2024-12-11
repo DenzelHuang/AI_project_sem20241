@@ -100,8 +100,8 @@ contents = {
     
         
         ''',
-   "setting3":
-    '''
+    "setting3":
+        '''
         1. Comprehensive Medicine and Pharmaceutical Knowledge:
 
         - Respond to all inquiries regarding medicine, pharmaceuticals, and drug-related topics with precise, evidence-based, and concise information.
@@ -145,11 +145,7 @@ contents = {
         - Always base answers on established medical and pharmaceutical guidelines.
         - If unsure about a specific answer, respond with:
             "I do not have sufficient information to provide a definitive answer. Please seek advice from a licensed medical professional."
-
-            
-    '''
-
-
+        '''
 }
 
 # List to serve as initial chat history
