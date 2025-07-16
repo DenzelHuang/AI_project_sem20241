@@ -2,7 +2,7 @@ from groq import Groq
 
 # Run this command to get started: pip install groq
 
-api_key = "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"
+api_key = "[Insert API key here]"
 
 client = Groq(
     api_key=api_key
